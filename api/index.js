@@ -20,41 +20,39 @@ bot.onText(/\/start/, (msg) => {
     );   
 });
 
+state = 0;
 bot.onText(/\/predict/, (msg) => { 
-    console.log(msg)
-    bot.sendMessage(
+        bot.sendMessage(
         msg.chat.id,
-        `masukkan nilai i|v seperti 2/2`
+        `Masukkan nilai i|v seperti 2/2`
     );
-    state = 1
+    state = 1   
 });
 
-bot_on('message', (msg)=> {
+bot.on('message',(msg) => {
     if(state == 1){
-        console.log(msg.text);
-        s = msg.text.split("|")
+        s = msg.text.split("|");
         i = s[0]
         v = s[1]
         model.predict(
             [
-                parseFloat(s[0]), // string to float
-                parseFloat(s[1])
+                parseFloat (s[0]),
+                parseFloat (s[1])
             ]
-    ).then((jres)=>{
+        ).then((jres)=>{
             bot.sendMessage(
                 msg.chat.id,
-                'Nilai V yang diprediksi adalah S{jres[0]} Volt
-                );
-            bot.sendMessage(
-                msg.chat.id,
-                'Nilai P yang diprediksi adalah S{jres[0]} Watt
-                );
+                'nilai v yang diprediksi adalah ${jres[0]} volt'  
+            );
+           bot.sendMessage(
+               msg.chat.id,
+               'Nilai P yang diprediksi adalah ${jres[1]} Watt'
+           );
         })
     }else{
-    state = 0
-}
-       })
-                
+        state = 0
+    }
+})
 
 
 // routers
