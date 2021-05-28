@@ -26,7 +26,7 @@ bot.onText(/\/predict/, (msg) => {
         msg.chat.id,
         `Masukkan nilai i|v seperti 2/2`
     );
-    state = 1;   
+    state = 1   
 });
 
 bot.on('message',(msg) => {
